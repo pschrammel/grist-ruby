@@ -3,7 +3,7 @@
 require_relative "lib/grist/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "grist-grist"
+  spec.name = "grist"
   spec.version = Grist::Ruby::VERSION
   spec.authors = ["quentinchampenois"]
   spec.email = ["26109239+Quentinchampenois@users.noreply.github.com"]
