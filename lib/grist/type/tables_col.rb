@@ -10,12 +10,10 @@ module Grist
       end
 
       def all
-        return @all if defined?(@tables)
-
         grist_res = request(:get, tables_path)
         return [] if grist_res&.error?
 
-        @all = grist_res.data['tables']&.map do |t|
+        grist_res.data['tables']&.map do |t|
           Table.new(t.merge(doc_id: @id, ws_id: @ws_id))
         end
       end

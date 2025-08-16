@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'dotenv'
+require 'grist'
+require 'grist/cli'
+
+Dotenv.load
+
+Grist::Cli.start(ARGV)

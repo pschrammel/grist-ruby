@@ -14,7 +14,7 @@ module Grist
       def initialize(params = {})
         super params
         @doc_id = params[:doc_id]
-        @id = params[:id]
+        @ws_id = params[:ws_id]
       end
 
       def columns
