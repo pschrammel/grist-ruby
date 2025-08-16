@@ -16,7 +16,6 @@ module Grist
       ].freeze
 
       attr_accessor(*KEYS)
-      attr_reader :workspaces
 
       # Initialize a new Organization
       # @param params [Hash] The parameters to initialize the organization with

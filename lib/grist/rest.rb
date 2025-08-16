@@ -2,7 +2,7 @@
 
 module Grist
   module Rest
-    def request(method, endpoint, params = {})
+    def request(method, endpoint, params = {}) # rubocop:disable Metrics/MethodLength
       uri = URI("#{::Grist.base_api_url}#{endpoint}")
       uri.query = URI.encode_www_form(params) if method == :get
 
@@ -10,18 +10,18 @@ module Grist
       http.use_ssl = !::Grist.localhost?
 
       request = ::Net::HTTP.const_get(method.capitalize).new(uri)
-      request["Authorization"] = ::Grist.token_auth
-      request["Content-Type"] = "application/json"
+      request['Authorization'] = ::Grist.token_auth
+      request['Content-Type'] = 'application/json'
       request.body = params.to_json unless method == :get
 
       response = http.request(request)
 
-      raise InvalidApiKey, "Invalid API key" if response.is_a?(Net::HTTPUnauthorized)
+      raise InvalidApiKey, 'Invalid API key' if response.is_a?(Net::HTTPUnauthorized)
       raise NotFound, "Resource not found at : #{request.uri}" if response.is_a?(Net::HTTPNotFound)
 
       data = response_body(response.body)
 
-      Grist::Response.new(data: data, code: response.code)
+      Grist::Response.new(data:, code: response.code)
     rescue Net::OpenTimeout, Net::ReadTimeout, SocketError => e
       res = Grist::Response.new(code: response&.code, error: "Grist endpoint is unreachable at #{request.uri}",
                                 type: e.class)
@@ -51,8 +51,8 @@ module Grist
 
     def create(data)
       grist_res = request(:post, path, data)
-      puts "Creating #{path} with data: #{data}"
-      puts puts grist_res.inspect
+      # puts "Creating #{path} with data: #{data}"
+      # puts puts grist_res.inspect
       return unless grist_res.success?
 
       data.each_key do |key|
@@ -63,7 +63,7 @@ module Grist
     end
 
     def update(data)
-      id = instance_variable_get("@id")
+      id = instance_variable_get('@id')
       grist_res = request(:patch, "#{path}/#{id}", data)
       return unless grist_res.success?
 
@@ -75,11 +75,11 @@ module Grist
     end
 
     def delete
-      id = instance_variable_get("@id")
+      id = instance_variable_get('@id')
       grist_res = request(:delete, "#{path}/#{id}")
       return unless grist_res.success?
 
-      instance_variable_set("@deleted", true)
+      instance_variable_set('@deleted', true)
 
       self
     end

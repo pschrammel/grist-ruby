@@ -13,7 +13,7 @@ module Grist
 
       def initialize(params = {})
         keys.each do |key|
-          instance_variable_set("@#{key}", params[key])
+          instance_variable_set("@#{key}", params[key] || params[key.to_sym])
         end
         @deleted = params.delete(:deleted) || false
       end

@@ -16,6 +16,8 @@ module Grist
 
       def initialize(params = {})
         @doc_id = params[:doc_id]
+        @table_id = params[:table_id]
+
         KEYS.each do |key|
           instance_variable_set("@#{key}", params[key])
         end

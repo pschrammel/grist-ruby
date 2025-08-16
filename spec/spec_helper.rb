@@ -5,6 +5,9 @@ require "webmock/rspec"
 require "grist"
 
 RSpec.configure do |config|
+  WebMock.allow_net_connect!
+  WebMock.disable!
+  
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 

@@ -4,7 +4,7 @@ module Grist
   module Type
     # Defines a Grist Workspace
     class Workspace < Grist::Type::Base
-      PATH = "/workspaces"
+      PATH = '/workspaces'
       KEYS = %w[
         id
         name
@@ -34,7 +34,7 @@ module Grist
 
         return unless grist_res.success?
 
-        data["id"] = grist_res.data
+        data['id'] = grist_res.data
         data.transform_keys!(&:to_s)
         doc = Doc.new(data)
         @docs << doc
@@ -55,7 +55,7 @@ module Grist
       # @param org_id [Integer] The ID of the organization to list workspaces for
       # @return [Array] Array of workspaces
       def self.all(org_id)
-        grist_res = new(org_id: org_id).list
+        grist_res = new(org_id:).list
 
         return [] unless grist_res&.data.is_a?(Array)
         return [] unless grist_res&.data&.any?

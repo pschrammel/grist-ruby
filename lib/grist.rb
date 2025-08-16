@@ -15,6 +15,9 @@ require_relative "grist/type/access"
 require_relative "grist/type/workspace"
 require_relative "grist/type/organization"
 require_relative "grist/response"
+require_relative "grist/type/tables_col"
+require_relative "grist/type/records_col"
+require_relative "grist/type/column"
 
 module Grist
   class Error < StandardError
@@ -41,7 +44,7 @@ module Grist
   end
 
   def self.api_key
-    ENV["GRIST_API_KEY"]
+    ENV.fetch("GRIST_API_KEY", nil)
   end
 
   def self.token_auth
@@ -49,7 +52,7 @@ module Grist
   end
 
   def self.base_api_url
-    base_api_url = ENV["GRIST_API_URL"]
+    base_api_url = ENV.fetch("GRIST_API_URL", nil)
     return base_api_url[0..-2] if !base_api_url.nil? && base_api_url != "" && base_api_url.end_with?("/")
 
     base_api_url
