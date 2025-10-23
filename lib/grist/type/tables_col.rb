@@ -13,7 +13,7 @@ module Grist
         grist_res = request(:get, tables_path)
         return [] if grist_res&.error?
 
-        grist_res.data['tables']&.map do |t|
+        grist_res.data["tables"]&.map do |t|
           Table.new(t.merge(doc_id: @id, ws_id: @ws_id))
         end
       end
@@ -21,7 +21,7 @@ module Grist
       def create(data)
         grist_res = request(:post, tables_path, data)
 
-        return nil unless grist_res&.data.is_a?(Array)
+        nil unless grist_res&.data.is_a?(Array)
       end
 
       def find(id)

@@ -21,10 +21,20 @@ module Grist
         grist_res = request(:get, columns_path)
         return [] unless grist_res.success? && grist_res.data
 
+        cols = grist_res.data["columns"].map do |column|
+          Column.new(column.merge(doc_id: @doc_id, table_id: @id))
+        end
+        cols.index_by { |col| col.fields["label"] }
+      end
+
+      def columns_by_id
+        grist_res = request(:get, columns_path)
+        return [] unless grist_res.success? && grist_res.data
+
         cols = grist_res.data['columns'].map do |column|
           Column.new(column.merge(doc_id: @doc_id, table_id: @id))
         end
-        cols.index_by { |col| col.fields['label'] }
+        cols.index_by { |col| col.id }
       end
 
       def records(_params = {})
@@ -89,7 +99,7 @@ module Grist
         grist_res = org.access
         return unless grist_res.success? && grist_res.data
 
-        grist_res.data['users'].map do |access|
+        grist_res.data["users"].map do |access|
           Access.new(access)
         end
       end

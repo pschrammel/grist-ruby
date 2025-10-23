@@ -4,7 +4,7 @@ module Grist
   module Type
     # Defines a Grist Workspace
     class Record < Grist::Type::Base
-      PATH = '/records'
+      PATH = "/records"
       KEYS = %w[
         id
         fields

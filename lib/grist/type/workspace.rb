@@ -4,7 +4,7 @@ module Grist
   module Type
     # Defines a Grist Workspace
     class Workspace < Grist::Type::Base
-      PATH = '/workspaces'
+      PATH = "/workspaces"
       KEYS = %w[
         id
         name
@@ -34,7 +34,7 @@ module Grist
 
         return unless grist_res.success?
 
-        data['id'] = grist_res.data
+        data["id"] = grist_res.data
         data.transform_keys!(&:to_s)
         doc = Doc.new(data)
         @docs << doc

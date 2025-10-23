@@ -4,7 +4,7 @@ module Grist
   module Type
     # Defines a Grist Workspace
     class Doc < Grist::Type::Base
-      PATH = '/docs'
+      PATH = "/docs"
       KEYS = %w[
         name
         createdAt
