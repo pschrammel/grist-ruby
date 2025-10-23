@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+unless Enumerable.method_defined?(:index_by)
+  module Enumerable
+    def index_by
+      if block_given?
+        each_with_object({}) do |element, hash|
+          hash[yield(element)] = element
+        end
+      else
+        to_enum(:index_by)
+      end
+    end
+  end
+end
+
 module Grist
   module Type
     # Defines a Grist Workspace
@@ -31,10 +45,10 @@ module Grist
         grist_res = request(:get, columns_path)
         return [] unless grist_res.success? && grist_res.data
 
-        cols = grist_res.data['columns'].map do |column|
+        cols = grist_res.data["columns"].map do |column|
           Column.new(column.merge(doc_id: @doc_id, table_id: @id))
         end
-        cols.index_by { |col| col.id }
+        cols.index_by(&:id)
       end
 
       def records(_params = {})
